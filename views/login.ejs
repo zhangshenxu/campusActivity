@@ -1,0 +1,28 @@
+<%- include header %>
+<div id="loginbox" class="main">
+  <form method="post" id="loginform">
+    <div class="row">
+      <label for="username">用户名</label>
+      <div>
+        <input type="text" name="username" id="login-username" placeholder="请输入用户名" maxlength="20">
+        <span class="mistake" id="login-username-mis">请输入用户名</span>
+      </div>
+    </div>
+    <div class="row">
+      <label for="password">密码</label>
+      <div>
+        <input type="password" name="password" id="login-password" placeholder="请输入密码">
+        <span class="mistake" id="login-password-mis">请输入密码</span>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <button type="submit">登录</button>
+      </div>
+    </div>
+  </form>
+  <% if (error) { %>
+  <p class="error"><%= error %></p>
+  <% } %>
+</div>
+<%- include footer %>

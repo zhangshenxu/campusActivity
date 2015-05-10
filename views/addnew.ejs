@@ -1,0 +1,66 @@
+<%- include header %>
+<div id="addnewbox" class="main">
+  <form method="post" enctype="multipart/form-data" action="/addnew" id="addnewform">
+    <div class="row">
+      <label for="title">活动标题</label>
+      <div>
+        <input type="text" class="inputwidth" id="addnew-title" name="title" placeholder="最长25个字符" maxlength="25">
+        <span class="mistake" id="addnew-title-mis">请输入活动标题</span>
+      </div>
+    </div>
+    <div class="row">
+      <label for="type">活动类型</label>
+      <div>
+        <select name="type" id="addnew-type">
+          <option value="0">请选择</option>
+          <option value="1">讲座</option>
+          <option value="2">旅行</option>
+          <option value="3">公益</option>
+          <option value="4">电影</option>
+          <option value="5">比赛</option>
+          <option value="6">演出</option>
+          <option value="99">其他</option>
+        </select>
+        <span class="mistake" id="addnew-type-mis">请选择活动类型</span>
+      </div>
+    </div>
+    <div class="row">
+      <label for="date">开始时间</label>
+      <div>
+        <input type="text" id="addnew-date" name="date" value="">
+        <span class="mistake" id="addnew-type-mis">请选择活动开始时间</span>
+      </div>
+    </div>
+    <div class="row">
+      <label for="place">活动地点</label>
+      <div>
+        <input type="text" class="inputwidth" id="addnew-place" name="place" placeholder="最长25个字符" maxlength="25">
+        <span class="mistake" id="addnew-place-mis">请输入活动地点</span>
+      </div>
+    </div>
+    <div class="row">
+      <label for="detail">活动详情</label>
+      <div>
+        <textarea name="detail" id="addnew-detail" rows="20" cols="54" max_length="4000"></textarea>
+        <span class="mistake" id="addnew-detail-mis">请输入活动详情</span>
+      </div>
+    </div>
+    <div class="row">
+      <label for="placard">活动海报</label>
+      <div>
+        <input type="file" class="placard" id="addnew-placard" name="placard"/>
+        <span class="tip">海报请小于2M</span>
+        <span class="mistake" id="addnew-placard-mis">请选择海报</span>
+        <% if (error){ %>
+        <p class="error"><%= error %></p>
+        <% } %>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <button type="submit">提交</button>
+      </div>
+    </div>
+  </form>
+</div>
+<%- include footer %>

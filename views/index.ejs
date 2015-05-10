@@ -1,0 +1,55 @@
+<%- include header %>
+  <div class="main clearfix">
+    <div id="sidebar">
+      <div class="sidebarbox">
+        <div class="header">活动类别</div>
+        <ul>
+          <li><a href="/activity/all/<%= date %>/" <%if(type == "all") {%> class="active" <% } %> >全部</a></li>
+          <li><a href="/activity/1/<%= date %>/" <%if(type == "1") {%> class="active" <% } %> >讲座</a></li>
+          <li><a href="/activity/2/<%= date %>/" <%if(type == "2") {%> class="active" <% } %> >旅行</a></li>
+          <li><a href="/activity/3/<%= date %>/" <%if(type == "3") {%> class="active" <% } %> >公益</a></li>
+          <li><a href="/activity/4/<%= date %>/" <%if(type == "4") {%> class="active" <% } %> >电影</a></li>
+          <li><a href="/activity/5/<%= date %>/" <%if(type == "5") {%> class="active" <% } %> >比赛</a></li>
+          <li><a href="/activity/6/<%= date %>/" <%if(type == "6") {%> class="active" <% } %> >演出</a></li>
+          <li><a href="/activity/99/<%= date %>/" <%if(type == "99") {%> class="active" <% } %> >其他</a></li>
+        </ul>
+      </div>
+      <div class="sidebarbox">
+        <div class="header">活动时间</div>
+        <ul>
+          <li><a href="/activity/<%= type %>/all/" <%if(date == "all") {%> class="active" <% } %> >全部</a></li>
+          <li><a href="/activity/<%= type %>/today/" <%if(date == "today") {%> class="active" <% } %> >今天</a></li>
+          <li><a href="/activity/<%= type %>/tomorrow/" <%if(date == "tomorrow") {%> class="active" <% } %> >明天</a></li>
+          <li><a href="/activity/<%= type %>/underway/" <%if(date == "underway") {%> class="active" <% } %> >即将进行</a></li>
+          <li><a href="/activity/<%= type %>/done/" <%if(date == "done") {%> class="active" <% } %> >已开始</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="content">
+      <% if(error) {  %>
+      <div><%= error %></div>
+      <% }else{ %>
+      <ul>
+      <% activitys.forEach(function(activitys){ %> 
+        <li class="activity">
+          <div class="pic">
+            <img src="/images/minplacard/<%= activitys.placard %>" title="<%= activitys.title %>">
+          </div>
+          <div class="info">
+            <ul>
+              <li><a href="/activity/<%= activitys._id %>" class="title"><%= activitys.title %></a></li>
+              <li><span>类型：</span><a href="/activity/<%= activitys.type %>/<%= date %>/" class="type"><%if(activitys.type=="1"){%>讲座<%}%><%if(activitys.type=="2"){%>旅行<%}%><%if(activitys.type=="3"){%>公益<%}%><%if(activitys.type=="4"){%>电影<%}%><%if(activitys.type=="5"){%>比赛<%}%><%if(activitys.type=="6"){%>演出<%}%><%if(activitys.type=="99"){%>其他<%}%></a></li>
+              <li><span>开始时间：</span><%= activitys.date.getFullYear() %>年<%= activitys.date.getMonth()+1 %>月<%= activitys.date.getDate() %>日 <%= activitys.date.toLocaleTimeString() %></li>
+              <li><span>地点：</span><%= activitys.place %></li>
+              <li><span>发起人：</span><%= activitys.publisher %></li>
+              <li><span>热度：</span><%= activitys.hot %></li>
+            </ul>
+          </div>
+        </li>
+        <% })%>
+      </ul>
+      <%- include paging %>
+      <% } %>
+    </div>
+  </div>
+<%- include footer %>

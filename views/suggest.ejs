@@ -1,0 +1,37 @@
+<%- include header %>
+<div id="suggestbox" class="main">
+  <p>如果你对我们有什么建议，欢迎告知~</p>
+  <% if(user) { %>
+  <form method="post" id="suggestform">
+      <div class="row">
+        <textarea name="suggest" id="suggest" rows="10" cols="54" max_length="4000" placeholder="感谢提出宝贵的建议~"></textarea>
+        <span class="mistake" id="suggest-mis">写点建议吧~</span>
+      </div>
+      <div class="row">
+        <button type="submit">发送</button>
+        <% if (error) { %>
+        <span class="error"><%= error %></span>
+        <% } %>
+        <% if (success) { %>
+        <span class="success"><%= success %></span>
+        <% } %>
+      </div>
+  </form>
+  <% if(user.username =='admin'){ %>
+  <div id="suggestlist">
+    <p>用户的建议：</p>
+    <ul>
+      <% suggestions.forEach(function(suggestion){ %>
+      <li>
+        <label><%= suggestion.name %>:</label>
+        <p><%= suggestion.suggest %></p>
+      </li>
+      <% }) %>
+    </ul>
+  </div>
+  <% } %>
+  <% }else{ %>
+  <a href="/login" class="nologin">请先登录</a>
+  <% } %>
+</div>
+<%- include footer %>

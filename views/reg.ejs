@@ -1,0 +1,45 @@
+<%- include header %>
+<div id="regbox" class="main">
+  <form method="post" id="regform">
+    <div class="row">
+      <label for="username">用户名</label>
+      <div>
+        <input type="text" name="username" id="reg-username" placeholder="请输入用户名" maxlength="15">
+        <span class="mistake" id="reg-username-mis">要求2-15个字符</span>
+      </div>
+    </div>
+    <div class="row">
+      <label for="password">密码</label>
+      <div>
+        <input type="password" name="password" id="reg-password" placeholder="请输入密码">
+        <span class="mistake" id="reg-password-mis">请输入密码</span>
+      </div>
+    </div>
+    <div class="row">
+      <label for="password-repeat">确认密码</label>
+      <div>
+        <input type="password" name="password-repeat" id="reg-password-re" placeholder="请再次输入密码">
+        <span class="mistake" id="reg-password-re-mis">请输入相同的密码</span>
+      </div>
+    </div>
+    <div class="row">
+      <label for="email">邮箱</label>
+      <div>
+        <input type="email" name="email" id="reg-email" placeholder="请输入邮箱">
+        <span class="mistake" id="reg-email-mis">请输入邮箱</span>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <button type="submit">注册</button>
+      </div>
+    </div>
+  </form>
+  <% if (error) { %>
+  <p class="error"><%= error %></p>
+  <% } %>
+  <% if (success) { %>
+  <p class="success"><%= success %></p>
+  <% } %>
+</div>
+<%- include footer %>

@@ -1,0 +1,102 @@
+<%- include header %>
+  <div id="activitybox" class="main clearfix">
+    <% if(error) {  %>
+    <div><%= error %></div>
+    <% }else{ %>
+    <div class="activity">
+      <div class="pic">
+        <a href="/images/placard/<%= activity.placard %>"><img src="/images/midplacard/<%= activity.placard %>" title="<%= activity.title %>"></a>
+      </div>
+      <div class="info">
+        <div class="title"><%= activity.title %><% if(activity.date.getTime() < Date.parse(new Date())){%><span class="end">已开始</span><%}%></div>
+        <div class="introduction">
+          <ul>
+            <li><span>类型：</span><%if(activity.type=="1"){%>讲座<%}%><%if(activity.type=="2"){%>旅行<%}%><%if(activity.type=="3"){%>公益<%}%><%if(activity.type=="4"){%>电影<%}%><%if(activity.type=="5"){%>比赛<%}%><%if(activity.type=="6"){%>演出<%}%><%if(activity.type=="99"){%>其他<%}%></li>
+            <li><span>开始时间：</span><%= activity.date.getFullYear() %>年<%= activity.date.getMonth()+1 %>月<%= activity.date.getDate() %>日 <%= activity.date.toLocaleTimeString() %></li>
+            <li><span>地点：</span><%= activity.place %></li>
+            <li><span>发起人：</span><%= activity.publisher %></li>
+            <li><span>热度：</span><%= activity.hot %></li>
+          </ul>
+        </div>
+        <% if(user && (user.username == activity.publisher || user.username == 'admin' ) ) { %>
+        <div class="edit"><a href="/activity/<%= activity._id %>/edit">修改</a></div>
+        <div class="delete"><a href="javascript:void(0)" id="delete">删除</a></div>
+        <% } %>
+      </div>
+    </div>
+    <div class="detail">
+      <h2 class="h2">活动详情</h2>
+      <div><%= activity.detail %></div>
+    </div>
+    <div class="comment">
+      <h2 class="h2">活动评论</h2>
+      <div>
+        <ul>
+          <% activity.comment.forEach(function(comment){ %>
+          <li>
+            <div><label class="name"><%= comment.name %></label><label class="date"><%= comment.date.getFullYear() %>-<%= comment.date.getMonth()+1%>-<%= comment.date.getDate()%> <%= comment.date.toLocaleTimeString() %></label></div>
+            <p><%= comment.content %></p>
+          </li>
+          <% }) %>
+        </ul>
+        <% if (user){ %>
+        <div class="row clearfix">
+          <textarea id="commenttextarea"></textarea>
+          <button type="submit" id="commentsubmit">发表</button>
+        </div>
+        <% }else{ %>
+        <a href="/login" class="nologin">评论请先登录~</a>
+        <% } %>
+      </div>
+    </div>
+  <script>
+    var a = $('.detail div').text();
+    //console.log(a);
+    var b = $.parseHTML(a);
+    $('.detail div').html(b);
+    //console.log(b);
+
+    $('#delete').click(function(){
+      //alert("删除~");
+      var r = confirm('确认删除？');
+      if(r==true){
+        $.ajax({
+          url:'/delete',
+          type:'POST',
+          //dataType: 'text',
+          data:{'id':'<%= activity._id %>'},
+          success: function(data){
+            if(data == 'ok'){
+              alert('删除成功！');
+              window.location='/'; 
+            }
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown){
+            alert('error');
+          }
+        });
+      }
+    });
+
+    $('#commentsubmit').click(function(){
+      var content = $('#commenttextarea').val();
+      if(content == ''){
+        alert('请输入评论');
+      }else{
+        content = content.replace(/\n/g,"<br/>");
+        var id = '<%= activity._id %>';
+        var date = new Date();
+        $.ajax({
+          url:'/comment',
+          type:'POST',
+          data:{'content':content,'id':id,'date':date},
+          success:function(data){
+            window.location.href='/activity/'+id;
+          }
+        });
+      }
+    });
+  </script>
+    <% } %>
+  </div>
+<%- include footer %>

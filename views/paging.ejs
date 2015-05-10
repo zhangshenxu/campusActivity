@@ -1,0 +1,29 @@
+<div id="kkpager"></div>
+<script type="text/javascript">
+  function getParameter(name) { 
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); 
+    var r = window.location.search.substr(1).match(reg); 
+    if (r!=null) return unescape(r[2]); return null;
+  }
+  $(function(){
+    var totalPage = <%= totalpage %>;
+    var totalRecords = <%= totalrecords %>;
+    var pageNo = getParameter('page');
+    if(!pageNo){
+      pageNo = 1;
+    }
+    kkpager.generPageHtml({
+      isShowTotalPage : false,
+      isShowTotalRecords : false,
+      isGoPage : false,
+      pno : pageNo,
+      total : totalPage,
+      totalRecords : totalRecords,
+      hrefFormer : '/activity/',
+      hrefLatter : '<%= hrefLatter %>',
+      getLink : function(n){
+        return this.hrefFormer + this.hrefLatter + '<%= paging %>' + n;
+      }
+    });
+  });
+</script>
